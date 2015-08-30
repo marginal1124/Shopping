@@ -122,6 +122,26 @@ public class User {
 				
 		return list;
 	}
+	
+	public static void deleteUser(int id){
+		
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+		conn = DB.getConn();
+		stmt = DB.getStmt(conn);
+		stmt.executeUpdate("delete from user where id="+id);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeStmt(stmt);
+			DB.closeConn(conn);
+		}
+			
+	}
+	
 }
 
 
