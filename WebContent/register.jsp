@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=GB18030"
 import = "com.shopping.util.*"
     pageEncoding="GB18030"%>
-    
+  
 <%
 request.setCharacterEncoding("GB18030");
 String action = request.getParameter("action");

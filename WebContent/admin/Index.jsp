@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html;charset=gb2312" %>
-
+<%@ include file="sessionCheck.jsp" %>
 <script language="javascript">
 	state = 0 ;
 	menuState = 0;
@@ -10,13 +10,13 @@
 <title>E_Shopping管理平台</title>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 
-<%
+<%-- <%
 String  admin =  (String)  session.getAttribute("admin");
 if(admin==null||!admin.equals("true")){
 	response.sendRedirect("login.jsp");
 }
 %>
-
+ --%>
 </head>
 
 <frameset rows="29,*" frameborder="0" border="0" framespacing="0" cols="*">

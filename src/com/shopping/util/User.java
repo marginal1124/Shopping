@@ -90,6 +90,9 @@ public class User {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DB.closeStmt(pStmt);
+			DB.closeConn(conn);
 		}
 	}
 	
@@ -141,7 +144,57 @@ public class User {
 		}
 			
 	}
+	public static User validate(String username, String password)
+			throws UserNotFoundException, PasswordNotCorrectException {
+		User u = null;
+		Connection conn = DB.getConn();
+		String sql = "select * from user where username = '" + username + "'";
+		//Statement stmt = DB.getStmt(conn);
+		ResultSet rs =  DB.executeQuery(conn, sql);
+		try {
+			if(!rs.next()) {
+				throw new UserNotFoundException();
+			} else {
+				if(!password.equals(rs.getString("password"))) {
+					throw new PasswordNotCorrectException();
+				}	
+				u =  new User();
+				u.setId(rs.getInt("id"));
+				u.setUsername(rs.getString("username"));
+				u.setPassword(rs.getString("password"));
+				u.setPhone(rs.getString("phone"));
+				u.setAddr(rs.getString("addr"));
+				u.setRdate(rs.getTimestamp("rdate"));
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DB.closeResultSet(rs);
+			DB.closeConn(conn);
+		}
+		return u;
+	}
 	
+	public void update(){
+		Connection conn = DB.getConn(); 
+		String sql = "update user set username = ?,phone=?,addr=?where id="+this.id;
+		PreparedStatement pStmt = DB.getpStmt(conn, sql);
+		System.out.println("update");
+		try {
+			pStmt.setString(1, username);
+		
+			pStmt.setString(2, phone);
+			pStmt.setString(3, addr);
+			
+			pStmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeStmt(pStmt);
+			DB.closeConn(conn);
+		}
+	}
 }
 
 

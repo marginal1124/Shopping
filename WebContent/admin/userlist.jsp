@@ -3,6 +3,7 @@
 <%@page 
 import = "com.shopping.util.*,java.sql.*,java.util.*" 
 %>
+<%@ include file="sessionCheck.jsp" %>
 <%
 //get  users
 List<User>  users = User.getUser();
