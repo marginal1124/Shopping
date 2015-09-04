@@ -4,10 +4,10 @@
 <TITLE></TITLE>
 <LINK REL=stylesheet HREF="script/toc.css" TYPE="text/css">
 <SCRIPT LANGUAGE="JavaScript" src="script/AdminTree.js"></script>
-<STYLE TYPE='text/css'>
+ <STYLE TYPE='text/css'>
 .level1 {margin-left:30;}
 .level2 {margin-left:38;}
-</STYLE>
+</STYLE> 
 </HEAD>
 <BODY onload="init()" topmargin="0" leftmargin="0" rightmargin="0">
 <DIV CLASS="level1" ID='head2Parent'>
@@ -15,7 +15,7 @@
 </DIV>
 
 <DIV CLASS="level2" ID='head2Child'>
-	<A href="userlist.jsp" id=ttt target=main onclick="doClick()"><LI>用户列表</LI></a>
+	<A href="userlist.jsp" id=ttt target=main onclick="doClick()"><LI>用户列表?</LI></a>
 	<!-- <A href="UserList.jsp" id=ttt target=main><LI>用户列表</LI></a>
 	<A href="RoleManager.jsp" id=ttt target=main><LI>系统角色</LI></a> -->
 </DIV>
@@ -25,8 +25,9 @@
 </DIV>
 
 <DIV CLASS="level2" ID='head3Child'>
-	<A href="categoryAdd.jsp" id=ttt target=main><LI>添加类别</LI></a>
-	<A href="Resource.jsp" id=ttt target=main><LI>类别列表</LI></a>
+	<A href="categoryAdd.jsp?pid=0" id=ttt target=main><LI>添加类别</LI></a>
+	<A href="categoryList.jsp" id=ttt target=main><LI>类别列表</LI></a>
+	<A href="categoryListjs.jsp" id=ttt target=main><LI>JS类别列表</LI></a>
 	<!-- <A href="ListServerResourceDir.jsp" id=ttt target=main><LI>资源归档</LI></a> -->
 </DIV>
 

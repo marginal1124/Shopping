@@ -118,5 +118,18 @@ public class DB {
 			}
 		}
 	}
+
+	public static void executeUpdate(Connection conn, String sql) {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			if(stmt != null) {
+				stmt.executeUpdate(sql);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }
