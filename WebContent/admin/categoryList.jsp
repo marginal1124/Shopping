@@ -44,6 +44,14 @@ List<Category>  categories= Category.getCategories();
 			<td><%=c.getGrade() %></td> 
 			<td>
 			<a  href="categoryAdd.jsp?pid=<%=c.getId() %>">添加子类别</a>
+			<%
+			if(c.isIsleaf()){
+			%>
+				<a  href="productAdd.jsp?categoryId=<%=c.getId() %>">添加商品</a>
+			<% 
+			}
+			%>
+			
 			</td>
 			<td>
 			<a  href="categoryDel.jsp?id=<%=c.getId()%>">Delete</a>

@@ -39,12 +39,22 @@ public class CategoryDAO {
 	}
 	public static void getCategories(List<Category> list,int id){
 		Connection conn = null;	
-		String sql= null;	
+	
+		try {
+			conn = DB.getConn();	
+			getCategories(conn, list, id);
+		}finally{		
+			DB.closeConn(conn);
+		}
+	}
+	
+	private static void getCategories(Connection conn,List<Category> list,int id){
 		
+		String sql= null;			
 		ResultSet rs = null;
 		
 		try {
-			conn = DB.getConn();	
+			
 			sql = "select *  from category where pid="+id;
 			rs = DB.executeQuery(conn, sql);
 			
@@ -58,7 +68,7 @@ public class CategoryDAO {
 				c.setGrade(rs.getInt("grade"));
 				list.add(c);
 				if(!c.isleaf){
-					getCategories(list, c.getId());
+					getCategories(conn,list, c.getId());
 				}
 			}
 
@@ -67,9 +77,10 @@ public class CategoryDAO {
 			e.printStackTrace();
 		}finally{
 			DB.closeResultSet(rs);
-			DB.closeConn(conn);
+			
 		}
 	}
+	
 	public static void addChildCategories(int pid,String name,String descr){
 		Connection conn =null;		
 		ResultSet rs = null;
@@ -114,5 +125,35 @@ public class CategoryDAO {
 			DB.closeResultSet(rs);
 			DB.closeConn(conn);
 		}
+	}
+	public static String findName(int id) {
+		Connection conn = null;	
+		String sql= null;	
+		
+		ResultSet rs = null;
+		Category  c =null;
+		try {
+			conn = DB.getConn();	
+			sql = "select *  from category where id="+id;
+			rs = DB.executeQuery(conn, sql);
+			
+			rs.next();
+				c = new Category();
+				c.setId(rs.getInt("id"));
+				c.setPid(rs.getInt("pid"));
+				c.setName(rs.getString("name"));
+				c.setDescr(rs.getString("descr"));
+				c.setIsleaf(rs.getInt("isleaf")==0?true:false);
+				c.setGrade(rs.getInt("grade"));
+
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			DB.closeResultSet(rs);
+			DB.closeConn(conn);
+		}
+		return c.getName();
 	}
 }

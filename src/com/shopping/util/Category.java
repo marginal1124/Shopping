@@ -76,6 +76,14 @@ public class Category {
 		CategoryDAO.addChildCategories(pid,name,descr);
 	}
 	
+	public boolean isLeaf(int isleaf){
+		if(isleaf==0)
+			return true;
+		else return false;
+	}
+	
+
+	
 	public static void deleteCategory(int id){
 		Connection conn = null;
 		Statement stmt = null;

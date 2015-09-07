@@ -15,7 +15,7 @@ Category.deleteCategory(id);
 <body>
 É¾³ý³É¹¦
 <script type="text/javascript">
-window.parent.main.document.location.reload();
+//window.parent.main.document.location.reload();
 
 </script>
 </body>
