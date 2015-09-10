@@ -16,13 +16,13 @@ List<Category>  categories= Category.getCategories();
 <title>Insert title here</title>
 </head>
 <body>
-	<table style="table-layout: fixed;" align="center" border="0"
+	<table style="table-layout: fixed;" align="center" border="1"
 			cellpadding="0" cellspacing="0" width="97%">
 			<tr>
-			<td>ID</td>
-			<td>name</td>
-			<td>pid</td>
-			<td>grade</td>
+			<td  width="10%">ID</td>
+			<td width="20%">name</td>
+			<td width="10%" >pid</td>
+			<td width="10%">grade</td>
 			
 			<td></td>
 			<td></td>
@@ -43,18 +43,25 @@ List<Category>  categories= Category.getCategories();
 			<td><%=c.getPid() %></td>
 			<td><%=c.getGrade() %></td> 
 			<td>
-			<a  href="categoryAdd.jsp?pid=<%=c.getId() %>">添加子类别</a>
+			&nbsp;&nbsp;<a  href="categoryAdd.jsp?pid=<%=c.getId() %>">添加子类别</a>
 			<%
 			if(c.isIsleaf()){
 			%>
-				<a  href="productAdd.jsp?categoryId=<%=c.getId() %>">添加商品</a>
+				&nbsp;&nbsp;<a  href="productAdd.jsp?categoryId=<%=c.getId() %>">添加商品</a>
 			<% 
 			}
 			%>
 			
 			</td>
-			<td>
-			<a  href="categoryDel.jsp?id=<%=c.getId()%>">Delete</a>
+			<td width="120px">
+			<%
+			if(c.isIsleaf()){
+			
+			%>
+			<center><a  href="categoryDel.jsp?id=<%=c.getId()%>">Delete</a></center>
+			<%		
+			}
+			%>
 			</td>
 			</tr>
 			<%} %>
