@@ -37,12 +37,13 @@ if(cart==null)
 
 <%
 	for(int i=0;i<items.size();i++){
+		Product p =ProductManager.getManager().loadById(items.get(i).getProductId());
 %>
   <tr><td> 商品<%=i+1 %> </td>
-    <td><%=ProductManager.getManager().loadById(items.get(i).getProductId()).getName() %></td>
-    <td> <%=items.get(i).getPrice()%> 元</td>
+    <td><%=p.getName() %></td>
+    <td> <%=items.get(i).getPrice() %> 元</td>
     <td> 
-    <input type="text"  size =4 name="<%="p"+items.get(i).getProductId() %>" value ="<%=items.get(i).getCount()%>">
+    <input type="text"  size =4 name="<%="p"+items.get(i).getProductId() %>" value ="<%=items.get(i).getCount()%>" >
     </td>
 
   </tr>
@@ -50,12 +51,18 @@ if(cart==null)
 	}
 %>
 </table>
-
+ 共 <%=Math.round(cart.getTotalSum()*100)/100%> 元
 </br>
-<input  type="submit" value="提交">
+<input  type="submit" value="确认修改数量">
+<input  type="button" value="确认订单"  onclick="submitCart()">
 </form>
 </center>
 
+<script type="text/javascript">
+function submitCart(){
+	document.location.href="confirm.jsp";
+}
 
+</script>
 </body>
 </html>

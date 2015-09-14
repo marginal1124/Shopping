@@ -83,6 +83,17 @@ public class DB {
 		return pstmt;
 				
 	}
+	public static PreparedStatement getpStmt(Connection conn,String sql,boolean generatedKey){
+		PreparedStatement pstmt =null;
+		try {
+			pstmt =  conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pstmt;
+				
+	}
 	
     public static ResultSet executeQuery(Statement stmt,String sql){
 	

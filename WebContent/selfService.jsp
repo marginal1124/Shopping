@@ -17,6 +17,7 @@ if(u==null){
 <title>Insert title here</title>
 </head>
 <body>
-<a href="userModify.jsp" >修改个人信息</a>
+<a href="userModify.jsp" >修改个人信息</a>&nbsp;&nbsp;&nbsp;
+<a href="index.jsp" >跳过</a>
 </body>
 </html>

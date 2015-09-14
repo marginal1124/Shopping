@@ -23,10 +23,10 @@ if(admin==null||!admin.equals("true")){
   <frame name="top" scrolling="NO" noresize src="top.html">
   <frameset cols="20%,*" frameborder="0" border="0" framespacing="0" rows="*" scrolling="NO" name="mleft">
     <frame src="menu.html" frameborder=NO border="0" scrolling="NO" >
-    <frameset rows="20,100%,*" name="content" frameborder="1" framespacing="1" cols="*">
+    <frameset rows="20,70%,*" name="content" frameborder="1" framespacing="1" cols="*">
       <frame src="title.html" frameborder=0 noresize scrolling="NO" name="mtitle">
       <frame src="" frameborder=0  name="main" marginwidth="0" marginheight="0" scrolling="YES">
-      <frame src="" frameborder=0  name="detail">
+      <frame src="" frameborder=0 noresize scrolling="NO"  name="detail">
     </frameset>
   </frameset>
 </frameset>

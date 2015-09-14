@@ -31,6 +31,8 @@ public interface ProductDAO {
 			 int pageNum,
 			 int pageSize);
 	
+	
+	
 	public boolean deleteProductByCategoryId(int categoryId);
 	
 	public boolean deleteProductById(int[] idArray);

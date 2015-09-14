@@ -28,4 +28,17 @@ public class Cart {
 		items.add(item);
 	}
 	
-}
+   public double getTotalSum(){
+	   double  sum =0;
+	   for(int i = 0;i<items.size();i++){
+			CartItem itemPro = items.get(i);
+			sum+=itemPro.getTotalPrice();
+			}
+	   
+	   return sum;
+		}
+	   
+	   
+   }
+	
+

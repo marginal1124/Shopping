@@ -3,7 +3,8 @@
 <%@page 
 import = "com.shopping.util.*,java.sql.*,java.util.*" 
 %>
-    <%
+<%
+session.removeAttribute("cart");
 String action = request.getParameter("action");
 if(action!=null&&action.equals("login")){
 	String username = request.getParameter("username");

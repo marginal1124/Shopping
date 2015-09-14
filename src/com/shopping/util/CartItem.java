@@ -5,6 +5,7 @@ public class CartItem {
 	int productId;
 	int count;
 	double  price;
+	
 	public int getProductId() {
 		return productId;
 	}

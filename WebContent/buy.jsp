@@ -10,14 +10,19 @@ if(cart==null){
 	//注意要把新 new  的购物车放入session！！！
 	session.setAttribute("cart", cart);
 }
-
+User u =  (User) session.getAttribute("user");
 %>  
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 Product product = ProductManager.getManager().loadById(id);
 CartItem item =  new CartItem();
 item.setProductId(id);
-item.setPrice(product.getMemberPrice());
+if(u==null){
+	item.setPrice(product.getNormalPrice());
+}else{
+	item.setPrice(product.getMemberPrice());
+}
+
 item.setCount(1);
 
 cart.addItem(item);
