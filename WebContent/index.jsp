@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="GB18030"%>
 <%@ page import="com.shopping.util.*,com.shopping.dao.*"%>
 <%
@@ -6,6 +7,37 @@ final   int  num =6;
 List<Product> latestPro = ProductManager.getManager().latestProduct(num);
 
 %>
+<%
+session.removeAttribute("cart");
+String action = request.getParameter("action");
+if(action!=null&&action.equals("login")){
+	String username = request.getParameter("username");
+	String password = request.getParameter("password");
+	User u = null;
+	try{
+		u = User.validate(username, password);
+	}catch(UserNotFoundException e){
+		out.println("user not found");
+		return;
+	}catch(PasswordNotCorrectException e){
+		out.println("password not found");
+		return;
+	}
+	session.setAttribute("user", u);
+	response.sendRedirect("index.jsp");		
+	
+}
+%>
+<%
+List<Category> categorys = Category.getCategories();
+List<Category>  topCategory =  new ArrayList<Category>();
+System.out.println(categorys.size()+" "+topCategory.size());
+for(int i=0;i<categorys.size();i++){
+	Category c = categorys.get(i);
+	if(c.getGrade()==0)
+		topCategory.add(c);
+}
+%>
 
 <html>
 <head>
@@ -13,82 +45,13 @@ List<Product> latestPro = ProductManager.getManager().latestProduct(num);
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <title>商城 - 网上精品会员店</title>
 <link href="images/new.css" rel="stylesheet" type="text/css">
-
-<!-- <script language="JavaScript">
-var imgUrl=new Array();
-var imgLink=new Array();
-var imgTitle=new Array();
-var imgPrice1=new Array();
-var imgPrice2=new Array();
-var adNum=0;imgUrl[1]='http://www.thinkshop.cn/pimages/br0465.gif';
-	imgLink[1]='index_pi.php?productcode=BR0465';
-	imgTitle[1]='贝尔金家用笔记本电脑便携袋（银色，膝上型）';
-	imgPrice1[1]='价格：￥339.00';
-	imgPrice2[1]='会员价格：￥319.00';imgUrl[2]='http://www.thinkshop.cn/pimages/br0461.gif';
-	imgLink[2]='index_pi.php?productcode=BR0461';
-	imgTitle[2]='贝尔金家用笔记本电便携袋（橙色，手提型）';
-	imgPrice1[2]='价格：￥339.00';
-	imgPrice2[2]='会员价格：￥319.00';imgUrl[3]='http://www.thinkshop.cn/pimages/gt1176.gif';
-	imgLink[3]='index_pi.php?productcode=GT1176';
-	imgTitle[3]='贝尔金家用笔记本便携内袋（银）';
-	imgPrice1[3]='价格：￥369.00';
-	imgPrice2[3]='会员价格：￥359.00';imgUrl[4]='http://www.thinkshop.cn/pimages/gt0873.gif';
-	imgLink[4]='index_pi.php?productcode=GT0873';
-	imgTitle[4]='3M 14.1 电脑防窥片';
-	imgPrice1[4]='价格：￥459.00';
-	imgPrice2[4]='会员价格：￥449.00';var imgPre=new Array();
-var j=0;
-for (i=1;i<imgUrl.length;i++) {
-if( (imgUrl[i]!="") && (imgLink[i]!="") ) {
-j++;
-} else {
-break;
-}
-}
-
-function playTran(){
-	if (document.all)
-	imgInit.filters.revealTrans.play();
-}
-
-var key=0;
-
-function nextAd(){
-	if(adNum<j)adNum++ ;
-	else adNum=1;
-
-	if( key==0 ){
-		key=1;
-	} else if (document.all){
-		imgInit.filters.revealTrans.Transition=10;
-		imgInit.filters.revealTrans.apply();
- 		playTran();
-	}
-	document.images.imgInit.src=imgUrl[adNum];
-	document.images.imgInit.title=imgTitle[adNum];
-	img_title.innerHTML='<font color=#FFFFff>'+imgTitle[adNum]+'</font>';
-	img_price1.innerHTML=imgPrice1[adNum];
-	img_price2.innerHTML=imgPrice2[adNum];
-	theTimer=setTimeout("nextAd()", 6000);
-}
-
-function goUrl(){
-jumpUrl=imgLink[adNum];
-jumpTarget='_blank';
-if (jumpUrl != ''){
-if (jumpTarget != '')
-window.open(jumpUrl,jumpTarget);
-else
-location.href=jumpUrl;
-}
-}
-</script> -->
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 <link href="images/new.css" rel="stylesheet" type="text/css">
 </head>
 <body onLoad="MM_preloadImages('images/00-2.gif','images/01-2.gif','images/02-2.gif','images/03-2.gif','images/04-2.gif',
 		'images/05-2.gif','images/06-2.gif','images/07-2.gif','images/08-2.gif','images/09-2.gif')">
 <script src="images/piaochuang.js"></script>
+<script src="script/jquery.min.js"></script>
 <table align="left" border="0" cellpadding="0" cellspacing="0" width="980">
   <tbody>
     <tr>
@@ -96,7 +59,7 @@ location.href=jumpUrl;
         <table style="border-collapse: collapse;" border="0" cellpadding="0" cellspacing="0" width="100%">
           <tbody>
             <tr>
-              <td width="10"></td>
+              <!-- <td width="10"></td>
               <td width="135"><a href="thinkshop.cn.htm"></a></td>
               <td width="50"></td>
               <td width="120"><a target="_blank" href="index_bat.php.htm"><img src="images/dazong.gif" border="0" height="47" width="90"></a></td>
@@ -109,7 +72,7 @@ location.href=jumpUrl;
                   <area href="my_thinkshop.php.htm" shape="rect" coords="92, 1, 158, 15" target="_blank">
                   <area href="extend.php.htm" shape="rect" coords="170, 0, 233, 16" target="_blank">
                 </map>
-                <img src="images/top_right.gif" usemap="#FPMap_inctop" border="0" height="22" width="238"></td>
+                <img src="images/top_right.gif" usemap="#FPMap_inctop" border="0" height="22" width="238"></td> -->
             </tr>
           </tbody>
         </table></td>
@@ -125,11 +88,11 @@ location.href=jumpUrl;
 					
                       <td align="left">
                       
-					  		<a href="" onMouseOver="on_trview(代替c.getId(),'in')">
-								<!--<img src="images/00.gif" name="Image0" border="0">-->
+					  		<!-- <a href="" onMouseOver="on_trview(代替c.getId(),'in')">
+								<img src="images/00.gif" name="Image0" border="0">
 								？？？？？？<span style="color:#FFFFFF">代替c.getName()</span>
 							</a>
-						
+						 -->
 					  </td>
 					  
                     </tr>
@@ -185,29 +148,64 @@ function Validator_s(theForm)
 	}
 }
 </script>
-              <form method="post" action="product_search.php" onSubmit="return Validator_s(this)">
+
+<script>
+var request;
+function secondSearchtype(){
+	var id = document.getElementById("category1");
+	var selectId = id.options[id.selectedIndex].value;
+	
+	var url = "getChildCategory.jsp?id="+selectId;
+	
+		request = new XMLHttpRequest();
+	
+	
+	request.open("GET",url,true);	
+	request.onreadystatechange = callback;		
+	request.send(null);	
+}
+function callback(){
+	 if(request.readyState==4){
+		if(request.status==200){
+
+			$("#category2").empty();
+			var json = request.responseText;			
+			var res=eval("("+json+")");			
+			var category2 = document.getElementById("category2");			
+			for(var i=0;i< res.length;i++){
+				var opt = document.createElement("option");
+				opt.value=res[i].id;
+				opt.innerHTML=res[i].name;
+				category2.appendChild(opt);
+			}
+		}		
+	 }	
+}
+
+</script>
+              <form method="post" name="form2"  action="product_search.php" onSubmit="return Validator_s(this)">
               </form>
               <td background="images/topbg3.gif" valign="middle" width="521"><input name="Bsearch" value="Y" type="hidden">
                 <table border="0" cellpadding="0" cellspacing="0" width="100%">
                   <tbody>
                     <tr>
-                      <td align="left" valign="middle" width="83%"><select name="searchproducttype1" style="font-size: 9pt; color: rgb(85, 85, 85);">
-                          <option selected="selected" value="all">--所有商品--</option>
-                          <option value="21">ThinkPad配件</option>
-                          <option value="5">笔记本配件</option>
-                          <option value="4">笔记本包</option>
-                          <option value="2">电脑配套</option>
-                          <option value="20">网络设备</option>
-                          <option value="22">数码专区</option>
-                          <option value="12">车载用品</option>
-                          <option value="23">AV线缆</option>
-                          <option value="3">办公文仪</option>
-                          <option value="8">商务礼品</option>
-                          <option value="24">清洁洗涤</option>
-                          <option value="26">防眩防窥</option>
-                          <option value="1">保修服务</option>
+                      <td align="left" valign="middle" width="83%">
+                      <select id="category1"  onchange="secondSearchtype()" style="font-size: 9pt;color: rgb(85, 85, 85);">
+                          <option selected value=0>--所有商品分类--</option>
+                          <%
+                         // System.out.println(topCategory.size());
+                          for(int i=0;i<topCategory.size();i++){
+                        	 Category top = topCategory.get(i);  
+                        	
+                          %>
+                          <option value=<%=top.getId() %>> <%= top.getName() %></option>
+                          <%
+                          }%>
                         </select>
-                        <input name="searchname" style="font-size: 9pt; color: rgb(85, 85, 85);" onFocus="if(this.value=='请输入您所要查找的商品名称'){this.value='';}" onBlur="if(this.value==''){this.value='请输入您所要查找的商品名称';}" value="请输入您所要查找的商品名称" size="25" maxlength="30" type="text">
+                        <select id="category2"  style="font-size: 9pt; width:80px ; color: rgb(85, 85, 85);">
+                        <option selected value=0>--商品--</option>
+                        </select>
+                        <!-- <input name="searchname" style="font-size: 9pt; color: rgb(85, 85, 85);" onFocus="if(this.value=='请输入您所要查找的商品名称'){this.value='';}" onBlur="if(this.value==''){this.value='请输入您所要查找的商品名称';}" value="请输入您所要查找的商品名称" size="25" maxlength="30" type="text"> -->
                         <input name="searchcode" style="font-size: 9pt; color: rgb(85, 85, 85);" onFocus="if(this.value=='商品编号'){this.value='';}" onBlur="if(this.value==''){this.value='商品编号';}" value="商品编号" size="8" maxlength="6" type="text">
                         <input src="images/go.gif" style="position: relative; top: 2px;" border="0" height="17" type="image" width="20">
                         &nbsp;<a href="index_search.php.htm"><img src="images/gaoji.gif" style="position: relative; top: 3px;" border="0" height="19" width="66"></a> </td>
@@ -250,12 +248,12 @@ function Validator_s(theForm)
                             </tr>
                             <tr>
                               <td align="center" bgcolor="#e2e4f0"><table border="0" cellpadding="0" cellspacing="0" width="95%">
-                                  <form method="post" action="Login.jsp">
-                                  
+                                  <form method="post" action="login.jsp">
+                                  <input type="hidden" name="action"  value="login">
                                   <tbody>
                                     <tr>
                                       <td align="left" height="25" width="73%">会员号：
-                                        <input name="username" size="10" style="font-size: 12px;" type="text"></td>
+                                        <input id="heh" name="username" size="10" style="font-size: 12px;" type="text"></td>
                                       <td rowspan="2" width="27%">
                                       	<input src="images/down.gif" name="B1" border="0" height="45" type="image" width="45"></td>
                                     </tr>
@@ -264,7 +262,7 @@ function Validator_s(theForm)
                                         <input name="password" size="10" style="font-size: 11px;" type="password"></td>
                                     </tr>
                                     <tr>
-                                      <td colspan="2" height="30"><p align="center">[<a href="Register.jsp">新用户注册</a>] &nbsp;[<a href="passwdview.php.htm" onClick="js_callpage(href);return false">忘记密码</a>]</p></td>
+                                      <td colspan="2" height="30"><p align="center">[<a href="register.jsp">新用户注册</a>] &nbsp;</p></td>
                                     </tr>
                                   </tbody>
                                   </form>

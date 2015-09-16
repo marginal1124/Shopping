@@ -11,11 +11,11 @@ function checkdata() {
 		form.pwd.focus()
 		return false;
 	}
-	if( form.pwd.value == form.username.value ) {
+	/*if( form.pwd.value == form.username.value ) {
 		alert("\用户名和密码不能相同！")
 		form.pwd.focus()
 		return false;
-	}
+	}*/
 	if( form.pwd2.value =="" ) {
 		alert("\请输入密码确认！")
 		form.pwd2.focus()

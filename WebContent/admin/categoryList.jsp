@@ -43,11 +43,11 @@ List<Category>  categories= Category.getCategories();
 			<td><%=c.getPid() %></td>
 			<td><%=c.getGrade() %></td> 
 			<td>
-			&nbsp;&nbsp;<a  href="categoryAdd.jsp?pid=<%=c.getId() %>">添加子类别</a>
+			&nbsp;&nbsp;<a  href="categoryAdd.jsp?pid=<%=c.getId() %>" >添加子类别</a>
 			<%
 			if(c.isIsleaf()){
 			%>
-				&nbsp;&nbsp;<a  href="productAdd.jsp?categoryId=<%=c.getId() %>">添加商品</a>
+				&nbsp;&nbsp;<a  href="productAdd.jsp?categoryId=<%=c.getId() %>" >添加商品</a>
 			<% 
 			}
 			%>
@@ -58,7 +58,7 @@ List<Category>  categories= Category.getCategories();
 			if(c.isIsleaf()){
 			
 			%>
-			<center><a  href="categoryDel.jsp?id=<%=c.getId()%>">Delete</a></center>
+			<center><a  href="categoryDel.jsp?id=<%=c.getId()%>"  target="detail">Delete</a></center>
 			<%		
 			}
 			%>

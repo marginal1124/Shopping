@@ -100,5 +100,12 @@ public class Category {
 			DB.closeConn(conn);
 		}
 	}
+	public static List<Category> getChild(int id){
+	
+		List<Category> childs = new ArrayList<Category>();
+		CategoryDAO.getChildCategories(childs,id);
+		
+		return childs;
+	}
 	
 }
